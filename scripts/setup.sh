@@ -19,6 +19,15 @@ sudo apt-get install -y nginx
 # Install Certbot for Let's Encrypt
 sudo apt-get install -y certbot python3-certbot-nginx
 
+# Install nodejs
+curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
+sudo -E bash nodesource_setup.sh
+sudo apt-get install -y nodejs
+
+# Install semantic-release plugins
+sudo npm install -g semantic-release @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/changelog @semantic-release/github @semantic-release/git
+sudo npm install semantic-release-helm
+
 # Install Terraform
 wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
@@ -44,6 +53,8 @@ sudo cp -r /tmp/jenkins/groovy/tf-validate-seed-job.groovy /var/lib/jenkins/stag
 sudo cp -r /tmp/jenkins/groovy/static-site-publish-seed-job.groovy /var/lib/jenkins/staged-init/static-site-publish-seed-job.groovy
 sudo cp -r /tmp/jenkins/groovy/webapp-publish-seed-job.groovy /var/lib/jenkins/staged-init/webapp-publish-seed-job.groovy
 sudo cp -r /tmp/jenkins/groovy/db-webapp-publish-seed-job.groovy /var/lib/jenkins/staged-init/db-webapp-publish-seed-job.groovy
+sudo cp -r /tmp/jenkins/groovy/api-server-seed-job.groovy /var/lib/jenkins/staged-init/api-server-seed-job.groovy
+sudo cp -r /tmp/jenkins/groovy/api-server-prcheck-seed-job.groovy /var/lib/jenkins/staged-init/api-server-prcheck-seed-job.groovy
 
 # Commitlint seed job scripts
 sudo cp -r /tmp/jenkins/groovy/commitlint-infra-jenkins.groovy /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy
@@ -52,6 +63,7 @@ sudo cp -r /tmp/jenkins/groovy/commitlint-tf-gcp-infra.groovy /var/lib/jenkins/s
 sudo cp -r /tmp/jenkins/groovy/commitlint-static-site.groovy /var/lib/jenkins/staged-init/commitlint-static-site.groovy
 sudo cp -r /tmp/jenkins/groovy/commitlint-webapp-hello-world.groovy /var/lib/jenkins/staged-init/commitlint-webapp-hello-world.groovy
 sudo cp -r /tmp/jenkins/groovy/commitlint-db-webapp.groovy /var/lib/jenkins/staged-init/commitlint-db-webapp.groovy
+sudo cp -r /tmp/jenkins/groovy/commitlint-api-server.groovy /var/lib/jenkins/staged-init/commitlint-api-server.groovy
 
 # Copy Jenkins configuration as code (JCasC) file
 sudo cp /tmp/jenkins/jcasc.yaml /var/lib/jenkins/jcasc.yaml
@@ -74,6 +86,8 @@ mv /var/lib/jenkins/staged-init/tf-validate-seed-job.groovy /usr/local/tf-valida
 mv /var/lib/jenkins/staged-init/static-site-publish-seed-job.groovy /usr/local/static-site-publish-seed-job.groovy
 mv /var/lib/jenkins/staged-init/webapp-publish-seed-job.groovy /usr/local/webapp-publish-seed-job.groovy
 mv /var/lib/jenkins/staged-init/db-webapp-publish-seed-job.groovy /usr/local/db-webapp-publish-seed-job.groovy
+mv /var/lib/jenkins/staged-init/api-server-seed-job.groovy /usr/local/api-server-seed-job.groovy
+mv /var/lib/jenkins/staged-init/api-server-prcheck-seed-job.groovy /usr/local/api-server-prcheck-seed-job.groovy
 
 # Commitlint seed job scripts
 mv /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy /usr/local/commitlint-infra-jenkins.groovy
@@ -82,6 +96,7 @@ mv /var/lib/jenkins/staged-init/commitlint-tf-gcp-infra.groovy /usr/local/commit
 mv /var/lib/jenkins/staged-init/commitlint-static-site.groovy /usr/local/commitlint-static-site.groovy
 mv /var/lib/jenkins/staged-init/commitlint-webapp-hello-world.groovy /usr/local/commitlint-webapp-hello-world.groovy
 mv /var/lib/jenkins/staged-init/commitlint-db-webapp.groovy /usr/local/commitlint-db-webapp.groovy
+mv /var/lib/jenkins/staged-init/commitlint-api-server.groovy /usr/local/commitlint-api-server.groovy
 
 # Restart Jenkins to apply initialization scripts
 systemctl restart jenkins
