@@ -1,4 +1,4 @@
-multibranchPipelineJob('sdb-migration-build-and-publish') {
+multibranchPipelineJob('db-migration-build-and-publish') {
     description('Builds a Docker image and publishes it to DockerHub on every push to main')
 
     branchSources {
