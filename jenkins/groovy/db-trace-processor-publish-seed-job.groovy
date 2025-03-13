@@ -1,16 +1,16 @@
-multibranchPipelineJob('sdb-migration-build-and-publish') {
+multibranchPipelineJob('db-trace-processor-build-and-publish') {
     description('Builds a Docker image and publishes it to DockerHub on every push to main')
 
     branchSources {
         branchSource {
             source {
                 github {
-                    id('db-migration-build-and-publish')
+                    id('db-trace-processor-build-and-publish')
                     credentialsId('github-pat')
                     configuredByUrl(true)
                     repoOwner('cyse7125-sp25-team03')
-                    repository('db-webapp')
-                    repositoryUrl('https://github.com/cyse7125-sp25-team03/db-webapp.git')
+                    repository('db-trace-processor')
+                    repositoryUrl('https://github.com/cyse7125-sp25-team03/db-trace-processor.git')
                 }
             }
         }
